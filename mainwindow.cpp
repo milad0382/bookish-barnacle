@@ -7,15 +7,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-     //connect(ui->cb_sha,SIGNAL(currentTextChanged()),this,SLOT(clear_var()));
-     connect(ui->cb_sha,SIGNAL(currentIndexChanged(int)), this, SLOT(clear_var()));
+    connect(ui->cb_sha,SIGNAL(currentIndexChanged(int)), this, SLOT(clear_var()));
 }
 MainWindow::~MainWindow()
 {
     delete ui;
-
-
-
 }
 void MainWindow::on_le_sha_textChanged(const QString &hash)
 {
@@ -23,7 +19,7 @@ void MainWindow::on_le_sha_textChanged(const QString &hash)
     QByteArray hash_data;
     hash_data.append(hash);
 
-    //convert
+    //gen sha256
     if(ui->cb_sha->currentText() == "SHA256 Base64")
     sha256 = QString(QCryptographicHash::hash(QByteArray::fromBase64(hash_data),QCryptographicHash::Sha256).toHex());
     else if(ui->cb_sha->currentText() == "SHA256 Hex")
@@ -52,6 +48,5 @@ void MainWindow::on_bt_sha_gen_clicked()
     ui->log_sha->setText(QString("Response : %0").arg(sha256));
 }
 void MainWindow::clear_var(){
-qInfo()<<"hello";
     ui->le_sha->clear();
 }
